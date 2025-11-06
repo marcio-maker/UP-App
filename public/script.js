@@ -2087,16 +2087,31 @@ class UniversidadePaisApp {
         this.setupBenefitCards();
     }
 
-    setupBenefitCards() {
-        const benefitCards = document.querySelectorAll('.benefit-card');
-        benefitCards.forEach(card => {
-            card.addEventListener('click', function () {
-                const benefitTitle = this.querySelector('h3').textContent;
-                const benefitDescription = this.querySelector('p').textContent;
-                app.toast(`💫 ${benefitTitle}: ${benefitDescription.substring(0, 80)}...`, 'info');
-            });
-        });
+    s/* No script.js */
+setupBenefitCards() {
+    const benefitsScreen = document.getElementById('screen-benefits');
+    
+    // Implementa uma verificação para garantir que o listener de delegação seja anexado apenas UMA VEZ
+    if (!benefitsScreen || benefitsScreen.dataset.listenerAttached) {
+        return;
     }
+
+    benefitsScreen.addEventListener('click', function(e) {
+        // Usa .closest() para encontrar o card clicado com a classe '.benefit-card'
+        const card = e.target.closest('.benefit-card');
+        
+        if (card) {
+            // O código aqui é executado apenas uma vez por clique no card
+            const benefitTitle = card.querySelector('h3')?.textContent || 'Benefício';
+            window.app.toast(`Detalhes do Benefício: ${benefitTitle} (Cliques Corrigidos!)`, 'info', 3000);
+            
+            // Adicione aqui qualquer outra lógica de clique (ex: abrir modal)
+        }
+    });
+
+    // Marca o container como "listener anexado"
+    benefitsScreen.dataset.listenerAttached = 'true';
+}
 
     filterBenefits(category) {
         const cards = document.querySelectorAll('.benefit-card');
