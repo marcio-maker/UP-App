@@ -1,0 +1,296 @@
+{
+  "modules": [
+    {
+      "id": 0, 
+      "title": "Módulo 1: Tranquilizando os Pais", 
+      "description": "Acalmando preocupações comuns dos pais e fortalecendo a base familiar.",
+      "duration": "8 aulas × 8min",
+      "color": "#4A90E2",
+      "aulas": [
+        {
+          "id": 0,
+          "title": "Aula 1: Entendendo as Preocupações",
+          "video": "https://www.youtube.com/embed/hB1UNt93FN8?rel=0",
+          "duration": "8 min",
+          "quizId": 0,
+          "description": "Aula essencial sobre entender preocupações parentais."
+        },
+        {
+          "id": 1,
+          "title": "Aula 2: Comunicação Familiar",
+          "video": "https://www.youtube.com/embed/vehTS91mObM?rel=0",
+          "duration": "8 min",
+          "quizId": 1,
+          "description": "Aula essencial sobre melhorar comunicação familiar."
+        },
+        {
+          "id": 2,
+          "title": "Aula 3: Gestão de Conflitos",
+          "video": "https://www.youtube.com/embed/2H85Q_UjF5o?rel=0",
+          "duration": "8 min",
+          "quizId": 2,
+          "description": "Aula essencial sobre gerir conflitos construtivamente."
+        },
+        {
+          "id": 3,
+          "title": "Aula 4: Estabelecendo Limites",
+          "video": "https://www.youtube.com/embed/hB1UNt93FN8?rel=0",
+          "duration": "8 min",
+          "quizId": 3,
+          "description": "Aula essencial sobre estabelecer limites saudáveis."
+        },
+        {
+          "id": 4,
+          "title": "Aula 5: O Poder do Exemplo",
+          "video": "https://www.youtube.com/embed/vehTS91mObM?rel=0",
+          "duration": "8 min",
+          "quizId": 4,
+          "description": "Aula essencial sobre o impacto do exemplo parental."
+        },
+        {
+          "id": 5,
+          "title": "Aula 6: A Importância do Tempo Juntos",
+          "video": "https://www.youtube.com/embed/2H85Q_UjF5o?rel=0",
+          "duration": "8 min",
+          "quizId": 5,
+          "description": "Aula essencial sobre valor do tempo em família."
+        },
+        {
+          "id": 6,
+          "title": "Aula 7: Lidando com a Tecnologia",
+          "video": "https://www.youtube.com/embed/hB1UNt93FN8?rel=0",
+          "duration": "8 min",
+          "quizId": 6,
+          "description": "Aula essencial sobre uso consciente da tecnologia."
+        },
+        {
+          "id": 7,
+          "title": "Aula 8: Respeito Mútuo",
+          "video": "https://www.youtube.com/embed/vehTS91mObM?rel=0",
+          "duration": "8 min",
+          "quizId": 7,
+          "description": "Aula essencial sobre respeito mútuo na família."
+        }
+      ]
+    },
+    {
+      "id": 1, 
+      "title": "Módulo 2: Conectando com o Adolescente", 
+      "description": "Técnicas avançadas de escuta, empatia e validação de sentimentos complexos.",
+      "duration": "8 aulas × 8min",
+      "color": "#FF8F00",
+      "aulas": [
+        {
+          "id": 0,
+          "title": "Aula 9: A Arte de Ouvir",
+          "video": "https://www.youtube.com/embed/2H85Q_UjF5o?rel=0",
+          "duration": "8 min",
+          "quizId": 8,
+          "description": "Aula focada em desenvolver escuta ativa."
+        },
+        {
+          "id": 1,
+          "title": "Aula 10: Validando Sentimentos",
+          "video": "https://www.youtube.com/embed/hB1UNt93FN8?rel=0",
+          "duration": "8 min",
+          "quizId": 9,
+          "description": "Aula focada em validar emoções adolescentes."
+        },
+        {
+          "id": 2,
+          "title": "Aula 11: Conversas Difíceis",
+          "video": "https://www.youtube.com/embed/vehTS91mObM?rel=0",
+          "duration": "8 min",
+          "quizId": 10,
+          "description": "Aula focada em lidar com conversas difíceis."
+        },
+        {
+          "id": 3,
+          "title": "Aula 12: Elogio Efetivo",
+          "video": "https://www.youtube.com/embed/2H85Q_UjF5o?rel=0",
+          "duration": "8 min",
+          "quizId": 11,
+          "description": "Aula focada em elogiar de forma efetiva."
+        },
+        {
+          "id": 4,
+          "title": "Aula 13: O Mundo Deles",
+          "video": "https://www.youtube.com/embed/hB1UNt93FN8?rel=0",
+          "duration": "8 min",
+          "quizId": 12,
+          "description": "Aula focada em entender o universo adolescente."
+        },
+        {
+          "id": 5,
+          "title": "Aula 14: Espaço e Confiança",
+          "video": "https://www.youtube.com/embed/vehTS91mObM?rel=0",
+          "duration": "8 min",
+          "quizId": 13,
+          "description": "Aula focada em equilibrar espaço e confiança."
+        },
+        {
+          "id": 6,
+          "title": "Aula 15: Entendendo a Rebeldia",
+          "video": "https://www.youtube.com/embed/2H85Q_UjF5o?rel=0",
+          "duration": "8 min",
+          "quizId": 14,
+          "description": "Aula focada em compreender comportamentos rebeldes."
+        },
+        {
+          "id": 7,
+          "title": "Aula 16: O Papel do Humor",
+          "video": "https://www.youtube.com/embed/hB1UNt93FN8?rel=0",
+          "duration": "8 min",
+          "quizId": 15,
+          "description": "Aula focada em usar humor nas relações."
+        }
+      ]
+    },
+    {
+      "id": 2, 
+      "title": "Módulo 3: Ferramentas de Impacto", 
+      "description": "Estratégias práticas e ferramentas validadas para mudança de comportamento imediata.",
+      "duration": "8 aulas × 8min", 
+      "color": "#9b59b6",
+      "aulas": [
+        {
+          "id": 0,
+          "title": "Aula 17: O Diário da Gratidão",
+          "video": "https://www.youtube.com/embed/vehTS91mObM?rel=0",
+          "duration": "8 min",
+          "quizId": 16,
+          "description": "Aula prática sobre cultivar gratidão familiar."
+        },
+        {
+          "id": 1,
+          "title": "Aula 18: Contratos Familiares",
+          "video": "https://www.youtube.com/embed/2H85Q_UjF5o?rel=0",
+          "duration": "8 min",
+          "quizId": 17,
+          "description": "Aula prática sobre criar contratos familiares."
+        },
+        {
+          "id": 2,
+          "title": "Aula 19: A Roda das Emoções",
+          "video": "https://www.youtube.com/embed/hB1UNt93FN8?rel=0",
+          "duration": "8 min",
+          "quizId": 18,
+          "description": "Aula prática sobre identificar e gerenciar emoções."
+        },
+        {
+          "id": 3,
+          "title": "Aula 20: Reuniões de Família",
+          "video": "https://www.youtube.com/embed/vehTS91mObM?rel=0",
+          "duration": "8 min",
+          "quizId": 19,
+          "description": "Aula prática sobre realizar reuniões familiares."
+        },
+        {
+          "id": 4,
+          "title": "Aula 21: Reforço Positivo",
+          "video": "https://www.youtube.com/embed/2H85Q_UjF5o?rel=0",
+          "duration": "8 min",
+          "quizId": 20,
+          "description": "Aula prática sobre aplicar reforço positivo."
+        },
+        {
+          "id": 5,
+          "title": "Aula 22: Consequências Naturais",
+          "video": "https://www.youtube.com/embed/hB1UNt93FN8?rel=0",
+          "duration": "8 min",
+          "quizId": 21,
+          "description": "Aula prática sobre estabelecer consequências naturais."
+        },
+        {
+          "id": 6,
+          "title": "Aula 23: O Poder da Escolha",
+          "video": "https://www.youtube.com/embed/vehTS91mObM?rel=0",
+          "duration": "8 min",
+          "quizId": 22,
+          "description": "Aula prática sobre oferecer escolhas adequadas."
+        },
+        {
+          "id": 7,
+          "title": "Aula 24: Rotinas Saudáveis",
+          "video": "https://www.youtube.com/embed/2H85Q_UjF5o?rel=0",
+          "duration": "8 min",
+          "quizId": 23,
+          "description": "Aula prática sobre criar rotinas saudáveis."
+        }
+      ]
+    },
+    {
+      "id": 3, 
+      "title": "Módulo 4: Crescendo Juntos", 
+      "description": "Visão de longo prazo, definindo valores e construindo um legado familiar duradouro.",
+      "duration": "8 aulas × 8min",
+      "color": "#00C853", 
+      "aulas": [
+        {
+          "id": 0,
+          "title": "Aula 25: Definindo Valores",
+          "video": "https://www.youtube.com/embed/hB1UNt93FN8?rel=0",
+          "duration": "8 min",
+          "quizId": 24,
+          "description": "Aula inspiradora sobre definir valores familiares."
+        },
+        {
+          "id": 1,
+          "title": "Aula 26: Sonhos e Metas",
+          "video": "https://www.youtube.com/embed/vehTS91mObM?rel=0",
+          "duration": "8 min",
+          "quizId": 25,
+          "description": "Aula inspiradora sobre estabelecer sonhos e metas."
+        },
+        {
+          "id": 2,
+          "title": "Aula 27: Legado Familiar",
+          "video": "https://www.youtube.com/embed/2H85Q_UjF5o?rel=0",
+          "duration": "8 min",
+          "quizId": 26,
+          "description": "Aula inspiradora sobre construir legado familiar."
+        },
+        {
+          "id": 3,
+          "title": "Aula 28: A Jornada Continua",
+          "video": "https://www.youtube.com/embed/hB1UNt93FN8?rel=0",
+          "duration": "8 min",
+          "quizId": 27,
+          "description": "Aula inspiradora sobre manter a jornada familiar."
+        },
+        {
+          "id": 4,
+          "title": "Aula 29: O Que Fazer Agora",
+          "video": "https://www.youtube.com/embed/vehTS91mObM?rel=0",
+          "duration": "8 min",
+          "quizId": 28,
+          "description": "Aula inspiradora sobre próximos passos práticos."
+        },
+        {
+          "id": 5,
+          "title": "Aula 30: Celebrando Conquistas",
+          "video": "https://www.youtube.com/embed/2H85Q_UjF5o?rel=0",
+          "duration": "8 min",
+          "quizId": 29,
+          "description": "Aula inspiradora sobre celebrar conquistas familiares."
+        },
+        {
+          "id": 6,
+          "title": "Aula 31: Mais Recursos",
+          "video": "https://www.youtube.com/embed/hB1UNt93FN8?rel=0",
+          "duration": "8 min",
+          "quizId": 30,
+          "description": "Aula inspiradora sobre recursos adicionais."
+        },
+        {
+          "id": 7,
+          "title": "Aula 32: Mensagem Final",
+          "video": "https://www.youtube.com/embed/vehTS91mObM?rel=0",
+          "duration": "8 min",
+          "quizId": 31,
+          "description": "Aula inspiradora sobre mensagem final motivacional."
+        }
+      ]
+    }
+  ]
+}

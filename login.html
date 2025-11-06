@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Entrar/Cadastrar - Universidade de Pais</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css"> 
+  
+  <style>
+    /* Estilos originais do seu login.html mantidos aqui */
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: var(--bg);
+        margin: 0;
+        padding: 20px;
+        font-family: 'Inter', sans-serif;
+    }
+    
+    .login-container {
+        max-width: 400px;
+        width: 100%;
+        background: var(--card);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 30px;
+        animation: fadeInUp 0.4s ease-out;
+    }
+
+    /* ... (Estilos do layout mantidos) ... */
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    /* O estilo .login-logo não é mais necessário, mas vamos mantê-lo por segurança */
+    .login-logo { 
+      font-size: 2em;
+      font-weight: 800;
+      color: var(--primary);
+      display: inline-block; /* Garante que a imagem centralize bem */
+    }
+
+    .login-title {
+      font-size: 1.8em;
+      color: var(--text);
+      margin-top: 10px;
+      margin-bottom: 5px;
+    }
+
+    .login-subtitle {
+      font-size: 0.9em;
+      color: var(--muted);
+    }
+
+    .social-buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .social-btn {
+      flex: 1;
+      padding: 10px 15px;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 0.9em;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.3s;
+    }
+
+    .social-btn i {
+      font-size: 1.2em;
+    }
+
+    .social-btn.google {
+      background: #db4437; 
+      color: white;
+    }
+
+    .social-btn.google:hover {
+      background: #c33a2e;
+    }
+
+    .social-btn.facebook {
+      background: #4267B2; 
+      color: white;
+    }
+
+    .social-btn.facebook:hover {
+      background: #395797;
+    }
+
+    .divider {
+      text-align: center;
+      margin: 20px 0;
+      position: relative;
+      color: var(--muted);
+      font-size: 0.8em;
+    }
+
+    .divider::before, .divider::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 40%;
+      height: 1px;
+      background: #eee;
+    }
+
+    .divider::before {
+      left: 0;
+    }
+
+    .divider::after {
+      right: 0;
+    }
+
+    .divider span {
+      background: var(--card);
+      padding: 0 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group label {
+      font-size: 0.9em;
+      color: var(--text);
+      margin-bottom: 5px;
+      font-weight: 600;
+      display: block;
+    }
+
+    .form-group label i {
+      margin-right: 5px;
+      color: var(--primary);
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: var(--radius);
+      box-sizing: border-box;
+      font-size: 1em;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .form-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(58, 110, 165, 0.2);
+      outline: none;
+    }
+
+    .btn {
+      display: block;
+      padding: 12px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1.1em;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.1s;
+      margin-top: 10px;
+    }
+
+    .btn:hover:not(:disabled) {
+      background: #2980b9;
+    }
+    
+    .btn:active:not(:disabled) {
+      transform: scale(0.99);
+    }
+
+    .btn:disabled {
+      background: var(--muted);
+      cursor: not-allowed;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .mt-2 {
+        margin-top: 20px;
+    }
+
+    /* Estilos para o Toast (Feedback Visual) e Loading */
+    #toast-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+        pointer-events: none;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .toast {
+        background: var(--text); 
+        color: var(--card);
+        padding: 12px 20px;
+        border-radius: var(--radius);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        opacity: 0;
+        transform: translateX(100%);
+        transition: opacity 0.3s ease-out, transform 0.4s ease-out;
+        min-width: 250px;
+        font-size: 0.9em;
+        pointer-events: auto;
+    }
+
+    .toast.show {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .toast.success { background: var(--success); }
+    .toast.error { background: var(--danger); }
+    .toast.warning { background: var(--warning); color: var(--text); }
+    
+    /* Loading Spinner */
+    .btn-spinner {
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        border-radius: 50%;
+        border-top-color: #fff;
+        animation: spin 1s ease-in-out infinite;
+        vertical-align: middle;
+        margin-right: 5px;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    .btn.loading .btn-text {
+        visibility: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="toast-container"></div> 
+
+  <div class="login-container">
+    <div class="login-header">
+      <img src="https://tse3.mm.bing.net/th/id/OIP.2xBALJYhhVno3u98s_XItAHaHa?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3"
+        alt="Logo Universidade de Pais" class="logo"
+        style="width:50px;height:50px;border-radius:50%;object-fit:cover; margin-bottom: 10px; display: block; margin-left: auto; margin-right: auto;" />
+      <h1 class="login-title" id="form-title">Entrar na Sua Conta</h1> 
+      <p class="login-subtitle">Acesse o conteúdo exclusivo para pais e mães.</p>
+    </div>
+
+    <div class="social-buttons">
+      <button class="social-btn google" onclick="handleSocialLogin('google')">
+        <i class="fab fa-google"></i> <span>Continuar com Google</span>
+      </button>
+      <button class="social-btn facebook" onclick="handleSocialLogin('facebook')">
+        <i class="fab fa-facebook"></i> <span>Continuar com Facebook</span>
+      </button>
+    </div>
+
+    <div class="divider">
+      <span>ou</span>
+    </div>
+
+    <form id="auth-form" onsubmit="event.preventDefault(); handleEmailAuth();">
+      
+      <div class="form-group" id="name-group" style="display: none;">
+        <label for="name"><i class="fas fa-user"></i> Seu Nome</label>
+        <input type="text" id="name" class="form-input" placeholder="seu nome completo" autocomplete="name">
+      </div>
+      
+      <div class="form-group">
+        <label for="email"><i class="fas fa-envelope"></i> Seu Email</label>
+        <input type="email" id="email" class="form-input" placeholder="seu@email.com" autocomplete="email" required>
+      </div>
+
+      <div class="form-group" id="password-group">
+        <label for="password"><i class="fas fa-lock"></i> Sua Senha</label>
+        <input type="password" id="password" class="form-input" placeholder="sua senha" autocomplete="current-password" required>
+        <p class="muted mt-1" id="password-hint" style="font-size: 0.8em; margin-top: 5px; color: var(--muted); display: none;">Mínimo 8 caracteres, com letras e números.</p>
+      </div>
+      
+      <div class="form-group" id="confirm-password-group" style="display: none;">
+        <label for="confirm-password"><i class="fas fa-lock"></i> Confirme a Senha</label>
+        <input type="password" id="confirm-password" class="form-input" placeholder="repita sua senha" autocomplete="new-password">
+      </div>
+      
+      <button type="submit" class="btn w-100" id="submit-btn">
+        <span class="btn-spinner" style="display: none;"></span> 
+        <span class="btn-text">Entrar</span>
+      </button>
+      
+    </form>
+    
+    <p class="text-center mt-2" style="font-size: 0.9em;">
+      <a href="#" id="toggle-auth-mode">Não tem conta? <strong>Cadastre-se aqui.</strong></a> 
+      <a href="#" id="forgot-password" class="ml-1" style="display: none; color: var(--muted);">Esqueci a Senha</a>
+    </p>
+
+  </div>
+
+  <script src="auth.js" type="module"></script>
+  
+  <script>
+    // --- Funções de TOAST (Feedback Visual) e Lógica de Autenticação ---
+    
+    // Função para mostrar feedback (Toast)
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+      
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`; 
+      toast.textContent = message;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.classList.add('show');
+      }, 100); 
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+        toast.classList.add('hide');
+        toast.addEventListener('transitionend', () => toast.remove());
+      }, 4000); 
+    }
+    
+    let isLoginMode = true;
+
+    // Referências dos Elementos
+    const formTitle = document.getElementById('form-title');
+    const nameGroup = document.getElementById('name-group');
+    const nameInput = document.getElementById('name');
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordGroup = document.getElementById('confirm-password-group');
+    const confirmPasswordInput = document.getElementById('confirm-password');
+    const passwordHint = document.getElementById('password-hint');
+    const submitBtn = document.getElementById('submit-btn');
+    const btnText = submitBtn.querySelector('.btn-text');
+    const spinner = submitBtn.querySelector('.btn-spinner');
+    const toggleLink = document.getElementById('toggle-auth-mode');
+    const forgotPasswordLink = document.getElementById('forgot-password');
+
+    function resetAuthButton() {
+        submitBtn.classList.remove('loading');
+        spinner.style.display = 'none';
+        submitBtn.disabled = false;
+        btnText.textContent = isLoginMode ? 'Entrar' : 'Criar Minha Conta';
+    }
+
+    // Função para alternar entre Login e Cadastro
+    function toggleMode() {
+      isLoginMode = !isLoginMode;
+
+      if (isLoginMode) {
+        // MODO LOGIN
+        formTitle.textContent = 'Entrar na Sua Conta';
+        btnText.textContent = 'Entrar';
+        toggleLink.innerHTML = 'Não tem conta? <strong>Cadastre-se aqui.</strong>';
+        forgotPasswordLink.style.display = 'inline'; 
+        
+        // Esconde campos de Cadastro
+        nameGroup.style.display = 'none';
+        nameInput.required = false;
+        confirmPasswordGroup.style.display = 'none';
+        confirmPasswordInput.required = false;
+
+        // Ajusta campos de Login
+        passwordInput.required = true;
+        passwordInput.autocomplete = 'current-password';
+        passwordHint.style.display = 'none';
+
+      } else {
+        // MODO CADASTRO (Mostra segurança e padrão)
+        formTitle.textContent = 'Criar Sua Conta';
+        btnText.textContent = 'Criar Minha Conta';
+        toggleLink.innerHTML = 'Já tem conta? <strong>Faça Login.</strong>';
+        forgotPasswordLink.style.display = 'none';
+
+        // Mostra campos de Cadastro
+        nameGroup.style.display = 'flex';
+        nameInput.required = true;
+        confirmPasswordGroup.style.display = 'flex';
+        confirmPasswordInput.required = true;
+
+        // Ajusta campos de Senha para Cadastro
+        passwordInput.required = true;
+        passwordInput.autocomplete = 'new-password';
+        passwordHint.style.display = 'block';
+      }
+      resetAuthButton();
+      document.getElementById('email').focus();
+    }
+    
+    // Listener de alternância
+    toggleLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      toggleMode();
+    });
+
+    // Inicia estado de Loading
+    function startLoading() {
+        submitBtn.classList.add('loading');
+        spinner.style.display = 'block';
+        submitBtn.disabled = true;
+        btnText.textContent = isLoginMode ? 'Entrando...' : 'Criando Conta...';
+    }
+
+    // Função de validação de email
+    function isValidEmail(email) {
+        return /^[^ \s@]+@[^ \s@]+\.[^ \s@]+$/.test(email);
+    }
+
+    // Processar Login ou Cadastro com Email (Chama auth.js)
+    async function handleEmailAuth() {
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+        const name = document.getElementById('name').value.trim();
+
+        if (!isValidEmail(email)) {
+            showToast('Por favor, insira um email válido.', 'error');
+            return;
+        }
+
+        // Validações de segurança para Cadastro
+        if (!isLoginMode) {
+            if (name.length < 3) {
+                showToast('Por favor, insira seu nome completo.', 'error');
+                return;
+            }
+            if (password !== confirmPasswordInput.value) {
+                showToast('As senhas não coincidem. Tente novamente.', 'error');
+                confirmPasswordInput.focus();
+                return;
+            }
+        }
+        
+        startLoading();
+
+        try {
+            let result;
+            if (isLoginMode) {
+                result = await auth.loginWithEmail(email, password);
+                
+                if (result.status === 'user_not_found') {
+                    showToast('Usuário não encontrado. Que tal criar uma conta?', 'warning');
+                    toggleMode();
+                    return; 
+                }
+                
+            } else {
+                result = await auth.signUpWithEmail(email, password, name);
+            }
+
+            if (result && result.success) {
+                showToast(isLoginMode ? 'Login bem-sucedido! Redirecionando...' : 'Cadastro concluído! Bem-vindo(a)!', 'success');
+                setTimeout(() => {
+                    window.location.replace('index.html');
+                }, 500); 
+            } else if (result && result.error) {
+                showToast(`Erro: ${result.error}`, 'error');
+            } else {
+                 showToast('Ocorreu um erro desconhecido.', 'error');
+            }
+            
+        } catch (error) {
+            console.error('Erro na autenticação:', error);
+            showToast('Erro de conexão. Tente novamente.', 'error');
+        } finally {
+            resetAuthButton();
+        }
+    }
+
+    // Processar Login Social (Chama auth.js)
+    async function handleSocialLogin(provider) {
+        startLoading();
+
+        try {
+            let result;
+            if (provider === 'google') {
+                result = await auth.loginWithGoogle();
+            } else if (provider === 'facebook') {
+                result = await auth.loginWithFacebook(); 
+            }
+
+            if (result && result.success) {
+                showToast(`Sucesso! Logado com ${provider}. Redirecionando...`, 'success');
+                setTimeout(() => {
+                    window.location.replace('index.html');
+                }, 500); 
+            } else if (result && result.error) {
+                 showToast(`Erro ao conectar com ${provider}: ${result.error}`, 'error');
+            } else {
+                 showToast('Ocorreu um erro na autenticação social.', 'error');
+            }
+
+        } catch (error) {
+            console.error('Erro na autenticação social:', error);
+             showToast('Erro de conexão. Tente novamente.', 'error');
+        } finally {
+             resetAuthButton(); 
+        }
+    }
+    
+    // Inicialização da tela
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof auth !== 'undefined' && auth.isLoggedIn && auth.isLoggedIn()) {
+            window.location.replace('index.html');
+            return;
+        }
+        // Configura o estado inicial para Login
+        toggleMode(); 
+        toggleMode();
+        document.getElementById('email').focus();
+    });
+  </script>
+</body>
+</html>

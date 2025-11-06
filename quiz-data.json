@@ -1,0 +1,126 @@
+{
+  "1": [
+    {
+      "question": "O principal foco da Aula 2 (Pilares da Educação) é...",
+      "options": ["Apenas o desenvolvimento cognitivo.", "O equilíbrio entre afeto, limites e exemplo.", "A memorização de regras rígidas."],
+      "answerIndex": 1
+    },
+    {
+      "question": "Qual dos pilares é considerado o 'motor' da educação?",
+      "options": ["Afeto.", "Exemplo.", "Limites."],
+      "answerIndex": 0
+    }
+  ],
+  "2": [
+    {
+      "question": "A melhor prática para gerenciamento do tempo em família é...",
+      "options": ["Ter uma agenda individual para cada membro.", "Ter momentos de 'tempo de qualidade' não negociáveis.", "Deixar o tempo fluir naturalmente."],
+      "answerIndex": 1
+    }
+  ],
+  "4": [
+    {
+      "question": "Qual é o principal benefício de estabelecer uma 'Missão e Visão Familiar'?",
+      "options": ["Definir o orçamento mensal.", "Oferecer um propósito e direção para as decisões da família.", "Escolher o destino das férias."],
+      "answerIndex": 1
+    }
+  ],
+  "6": [
+    {
+      "question": "Em 'Como Lidar com Birras', a principal técnica sugerida é...",
+      "options": ["Colocar a criança no canto.", "Oferecer um doce para acalmar.", "Validar a emoção e impor o limite (conexão antes da correção)."],
+      "answerIndex": 2
+    }
+  ],
+  "8": [
+    {
+      "question": "O que a Aula 8 (Conexão e Afeto) define como o 'combustível' do relacionamento?",
+      "options": ["Dinheiro.", "Conexão e Afeto.", "Disciplina."],
+      "answerIndex": 1
+    }
+  ],
+  "9": [
+    {
+      "question": "A Disciplina Positiva foca em...",
+      "options": ["Punição e controle.", "Ensino de habilidades sociais e emocionais.", "Recompensas materiais."],
+      "answerIndex": 1
+    }
+  ],
+  "11": [
+    {
+      "question": "Para lidar com a ansiedade infantil, é importante...",
+      "options": ["Ignorar o sentimento para não reforçá-lo.", "Validar a emoção e ensinar a nomeá-la.", "Comparar com outras crianças."],
+      "answerIndex": 1
+    }
+  ],
+  "13": [
+    {
+      "question": "Qual o papel essencial do Pai, segundo a aula?",
+      "options": ["Prover apenas o sustento financeiro.", "Ser a figura de autoridade rígida.", "Participação ativa e presença emocional."],
+      "answerIndex": 2
+    }
+  ],
+  "15": [
+    {
+      "question": "Em caso de divórcio, o foco principal deve ser...",
+      "options": ["A divisão de bens.", "Garantir que a criança não se sinta culpada ou no meio do conflito.", "Falar mal do ex-cônjuge."],
+      "answerIndex": 1
+    }
+  ],
+  "18": [
+    {
+      "question": "A Escuta Ativa envolve...",
+      "options": ["Interromper para dar a solução rapidamente.", "Apenas ouvir o que a criança diz.", "Ouvir com atenção plena, validar e refletir o que foi dito."],
+      "answerIndex": 2
+    }
+  ],
+  "20": [
+    {
+      "question": "Qual é a base de uma boa comunicação em família?",
+      "options": ["Criticar a falha.", "Abertura, honestidade e respeito mútuo.", "Falar mais do que ouvir."],
+      "answerIndex": 1
+    }
+  ],
+  "22": [
+    {
+      "question": "O objetivo do Diário da Gratidão é...",
+      "options": ["Apenas registrar eventos ruins.", "Mudar o foco mental para o positivo, fortalecendo a resiliência.", "Criar uma lista de compras."],
+      "answerIndex": 1
+    }
+  ],
+  "24": [
+    {
+      "question": "Resiliência é a capacidade de...",
+      "options": ["Nunca cair.", "Se adaptar e se recuperar de adversidades.", "Sempre vencer."],
+      "answerIndex": 1
+    }
+  ],
+  "26": [
+    {
+      "question": "A melhor forma de lidar com 'Erros e Perdão' é...",
+      "options": ["Negar o erro.", "Reconhecer, pedir perdão e focar no que pode ser feito diferente.", "Fingir que nada aconteceu."],
+      "answerIndex": 1
+    }
+  ],
+  "28": [
+    {
+      "question": "A afirmação 'O exemplo não é uma forma de influenciar, é a única' significa que...",
+      "options": ["As palavras importam mais que as ações.", "O comportamento dos pais é o principal modelo para os filhos.", "Só se aprende com a perfeição."],
+      "answerIndex": 1
+    }
+  ],
+  "30": [
+    {
+      "question": "Cuidar do Cuidador refere-se a...",
+      "options": ["Colocar as necessidades dos filhos sempre em primeiro lugar.", "Garantir que os pais também tenham tempo para autocuidado e recarga.", "Contratar uma babá."],
+      "answerIndex": 1
+    }
+  ],
+  "32": [
+    {
+      "question": "O principal aprendizado da Conclusão e Próximos Passos é...",
+      "options": ["O curso acabou e não há mais o que aprender.", "A parentalidade é uma jornada de aprendizado contínuo.", "Agora você é um pai/mãe perfeito(a)."],
+      "answerIndex": 1
+    }
+  ]
+}

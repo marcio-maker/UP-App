@@ -1,0 +1,1337 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#3a6ea5" />
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Universidade de Pais">
+
+  <title>Universidade de Pais — Curso Demo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="app" role="application" aria-label="App Conexão Pais e Filhos">
+
+    <!-- Skip Link para Acessibilidade -->
+    <a href="#main-content" class="skip-link">Pular para conteúdo principal</a>
+    <!-- Elementos de Acessibilidade -->
+    <div id="a11y-announcement" aria-live="polite" aria-atomic="true"></div>
+    <div id="connectivity-status"></div>
+
+    <!-- HEADER FIXO -->
+    <header role="banner" aria-label="Cabeçalho do aplicativo">
+  <div class="brand" onclick="nav('home')" role="link" aria-label="Ir para Início"
+    style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+
+    <img src="https://tse3.mm.bing.net/th/id/OIP.2xBALJYhhVno3u98s_XItAHaHa?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3"
+      alt="Logo Universidade de Pais" class="logo"
+      style="width:50px;height:50px;border-radius:50%;object-fit:cover;" />
+
+    <div>
+      <h1 style="font-size:1.1em;margin:0;line-height:1;">Universidade de Pais</h1>
+      <div class="muted" style="font-size:11px">Conexão Pais e Filhos.</div>
+    </div>
+  </div>
+
+  <div class="nav-actions" style="position:relative;">
+    <button class="icon" aria-expanded="false" aria-controls="menu-dropdown" id="menu-button" title="Menu"
+      onclick="toggleMenu()">
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="menu-dropdown" id="menu-dropdown" role="menu" aria-hidden="true">
+      
+      <div class="tab" role="menuitem" tabindex="0" onclick="auth.logout()" style="color: var(--danger);">
+        <i class="fas fa-sign-out-alt"></i> Sair
+      </div>
+      
+      <div class="tab" role="menuitem" tabindex="0" onclick="nav('faq')">
+        <i class="fas fa-question-circle"></i> FAQs/Fale Conosco
+      </div>
+      <div class="tab" role="menuitem" tabindex="0" onclick="nav('courses')">
+        <i class="fas fa-graduation-cap"></i> Cursos
+      </div>
+      <div class="tab" role="menuitem" tabindex="0" onclick="nav('aulas')">
+        <i class="fas fa-play-circle"></i> Aulas
+      </div>
+      <div class="tab" role="menuitem" tabindex="0" onclick="nav('benefits')">
+        <i class="fas fa-star"></i> Benefícios
+      </div>
+      <div class="tab" role="menuitem" tabindex="0" onclick="nav('sentiments')">
+        <i class="fas fa-brain"></i> Lista de Emoções
+      </div>
+      <div class="tab" role="menuitem" tabindex="0" onclick="nav('notes')">
+        <i class="fas fa-sticky-note"></i> Anotações
+      </div>
+      <div class="tab" role="menuitem" tabindex="0" onclick="nav('favorites')">
+        <i class="fas fa-heart"></i> Favoritos
+      </div>
+      <div class="tab" role="menuitem" tabindex="0" onclick="nav('share')">
+        <i class="fas fa-share-alt"></i> Compartilhar
+      </div>
+      <div class="tab" role="menuitem" tabindex="0" onclick="nav('profile')">
+        <i class="fas fa-user-cog"></i> Configurações do Perfil
+      </div>
+      <div class="tab" role="menuitem" tabindex="0" onclick="exportUserData()">
+        <i class="fas fa-download"></i> Exportar Dados
+      </div>
+      
+      </div>
+  </div>
+</header>
+
+    <!-- LOADER GLOBAL -->
+    <div id="global-loader" class="global-loader" style="display: none;">
+      <div class="loading-spinner"></div>
+      <p>Carregando...</p>
+    </div>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="main-content" id="main-content" role="main" tabindex="-1">
+
+      <!-- SIGNUP -->
+      <section id="screen-intro" class="screen card" style="display:none; text-align:center;"
+        aria-labelledby="intro-title">
+        <h2 id="intro-title" style="margin-top:0; color: var(--primary);">Bem-vindo(a), <span
+            id="intro-user-name"></span>!</h2>
+        <p class="muted">Sua jornada para fortalecer os laços familiares começa agora. Este é o seu painel inicial.</p>
+
+        <div style="margin: 25px 0;">
+          <img src="https://tse3.mm.bing.net/th/id/OIP.2xBALJYhhVno3u98s_XItAHaHa?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3"
+            alt="Ícone de Família Conectada"
+            style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%; border: 5px solid var(--primary-light);" />
+        </div>
+
+        <p style="font-weight: 600;">Selecione uma opção para começar:</p>
+
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <button class="btn btn-cta" onclick="nav('home')">
+            <i class="fas fa-graduation-cap"></i> Ir para Módulos do Curso
+          </button>
+          <button class="btn ghost" onclick="nav('benefits')">
+            <i class="fas fa-star"></i> Explorar Benefícios
+          </button>
+          <button class="btn ghost danger-ghost" onclick="app.logout()">
+            <i class="fas fa-sign-out-alt"></i> Sair/Trocar Conta
+          </button>
+        </div>
+
+      </section>
+
+      <!-- HOME -->
+      <section id="screen-home" class="screen card" style="display:none" aria-labelledby="home-title">
+        <div class="course-head"
+          style="margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <div class="muted">Módulos</div>
+            <h2 id="home-title" style="margin:4px 0 0">Fortalecendo Laços Familiares</h2>
+          </div>
+          <div class="meta" style="font-size:0.9em;font-weight:600" id="total-progress">32 Aulas</div>
+        </div>
+        <p class="muted">Um curso único para fortalecer laços familiares, ministrado pelo Dr. Wimer Bottura Jr.</p>
+
+        <!-- Barra de Busca -->
+        <div class="search-bar" style="margin: 15px 0;">
+          <input type="text" id="search-modules" placeholder="🔍 Buscar módulos ou aulas..."
+            aria-label="Buscar módulos ou aulas">
+        </div>
+
+        <div class="modules" id="modules" style="margin-top:12px;"></div>
+
+        <!-- Estatísticas Rápidas -->
+        <div class="quick-stats card" style="margin-top: 20px; text-align: center;">
+          <h3 style="margin-top: 0;">Seu Progresso</h3>
+          <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+            <div class="stat-item">
+              <div id="stats-completed" style="font-size: 1.5em; font-weight: bold; color: var(--success)">0</div>
+              <div style="font-size: 0.8em; color: var(--muted)">Aulas Concluídas</div>
+            </div>
+            <div class="stat-item">
+              <div id="stats-percentage" style="font-size: 1.5em; font-weight: bold; color: var(--primary)">0%</div>
+              <div style="font-size: 0.8em; color: var(--muted)">Progresso Total</div>
+            </div>
+            <div class="stat-item">
+              <div id="stats-favorites" style="font-size: 1.5em; font-weight: bold; color: var(--danger)">0</div>
+              <div style="font-size: 0.8em; color: var(--muted)">Favoritos</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CURSOS -->
+      <section id="screen-courses" class="screen card" style="display:none" aria-labelledby="courses-title">
+        <h2 id="courses-title" style="margin-top:0">
+          <i class="fas fa-graduation-cap"></i> Nossos Cursos
+        </h2>
+        <p class="muted">Explore todos os cursos disponíveis para o desenvolvimento familiar.</p>
+
+        <div class="courses-grid">
+          <div class="course-card featured">
+            <div class="course-badge">Mais Popular</div>
+            <div class="course-header">
+              <h3>Conexão Pais e Filhos</h3>
+              <div class="course-rating">
+                <span class="stars">★★★★★</span>
+                <span class="rating-text">4.9 (2.3k avaliações)</span>
+              </div>
+            </div>
+            <p class="course-description">Curso completo para fortalecer laços familiares através de técnicas validadas
+              de comunicação e conexão emocional.</p>
+            <div class="course-meta">
+              <div class="meta-item">
+                <i class="fas fa-clock"></i>
+                <span>32 aulas</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-certificate"></i>
+                <span>Certificado</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-level-up-alt"></i>
+                <span>Todos os níveis</span>
+              </div>
+            </div>
+            <div class="course-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%"></div>
+              </div>
+              <span class="progress-text">0% completo</span>
+            </div>
+            <button class="btn" onclick="nav('home')">
+              <i class="fas fa-play-circle"></i> Continuar Curso
+            </button>
+          </div>
+
+          <div class="course-card">
+            <div class="course-header">
+              <h3>Comunicação Não-Violenta</h3>
+              <div class="course-rating">
+                <span class="stars">★★★★☆</span>
+                <span class="rating-text">4.7 (1.1k avaliações)</span>
+              </div>
+            </div>
+            <p class="course-description">Aprenda a se comunicar de forma empática e resolver conflitos de maneira
+              pacífica.</p>
+            <div class="course-meta">
+              <div class="meta-item">
+                <i class="fas fa-clock"></i>
+                <span>24 aulas</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-certificate"></i>
+                <span>Certificado</span>
+              </div>
+            </div>
+            <button class="btn ghost" onclick="toast('Curso em desenvolvimento!', 'info')">
+              <i class="fas fa-lock"></i> Em Breve
+            </button>
+          </div>
+
+          <div class="course-card">
+            <div class="course-header">
+              <h3>Gestão Emocional Infantil</h3>
+              <div class="course-rating">
+                <span class="stars">★★★★★</span>
+                <span class="rating-text">4.8 (890 avaliações)</span>
+              </div>
+            </div>
+            <p class="course-description">Técnicas para ajudar crianças a entenderem e gerenciarem suas emoções.</p>
+            <div class="course-meta">
+              <div class="meta-item">
+                <i class="fas fa-clock"></i>
+                <span>18 aulas</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-certificate"></i>
+                <span>Certificado</span>
+              </div>
+            </div>
+            <button class="btn ghost" onclick="toast('Curso em desenvolvimento!', 'info')">
+              <i class="fas fa-lock"></i> Em Breve
+            </button>
+          </div>
+
+          <div class="course-card">
+            <div class="course-header">
+              <h3>Disciplina Positiva</h3>
+              <div class="course-rating">
+                <span class="stars">★★★★☆</span>
+                <span class="rating-text">4.6 (756 avaliações)</span>
+              </div>
+            </div>
+            <p class="course-description">Estabeleça limites com amor e respeito, promovendo autonomia e
+              responsabilidade.</p>
+            <div class="course-meta">
+              <div class="meta-item">
+                <i class="fas fa-clock"></i>
+                <span>20 aulas</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-certificate"></i>
+                <span>Certificado</span>
+              </div>
+            </div>
+            <button class="btn ghost" onclick="toast('Curso em desenvolvimento!', 'info')">
+              <i class="fas fa-lock"></i> Em Breve
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- AULAS -->
+      <section id="screen-aulas" class="screen card" style="display:none" aria-labelledby="aulas-title">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px">
+          <div>
+            <div class="muted">Módulo Atual</div>
+            <h2 id="module-title" style="margin:6px 0 0">Título do Módulo</h2>
+          </div>
+          <div style="text-align:right">
+            <div class="muted">Progresso</div>
+            <div id="module-progress" style="font-weight:700;color:var(--primary)">0 / 8</div>
+          </div>
+        </div>
+        <div class="aulas" id="aulas-list"></div>
+        <div style="margin-top:20px;text-align:center">
+          <button class="btn ghost" onclick="nav('home')">← Voltar aos Módulos</button>
+        </div>
+      </section>
+
+      <!-- AULA (PLAYER) -->
+      <section id="screen-aula" class="screen" style="display:none" aria-labelledby="aula-title">
+        <div class="player card" style="padding:0;margin:0;">
+          <div class="lesson-video-container" aria-hidden="true">
+            <iframe id="aula-video" src=""
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen title="Player de vídeo" loading="lazy"></iframe>
+          </div>
+
+          <div style="padding:20px 20px 0 20px;">
+            <div class="player-header">
+              <div>
+                <div class="muted" style="margin-bottom: 4px;">Aula em Foco</div>
+                <h2 id="aula-title">Título da Aula</h2>
+              </div>
+              <div style="text-align:right">
+                <div class="muted">Duração</div>
+                <div style="font-weight:700">Até 8 min</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="player-controls"
+            style="padding: 0 20px 20px 20px; display:flex; justify-content: space-between; gap: 8px; flex-wrap: wrap;">
+            <button class="btn ghost" onclick="nav('aulas')">← Voltar</button>
+            <button class="btn ghost" id="bookmark-btn">
+              <i class="far fa-bookmark"></i> Marcar Aula
+            </button>
+            <button class="btn ghost" onclick="shareCurrentAula()">
+              <i class="fas fa-share"></i> Compartilhar
+            </button>
+            <button class="btn" id="mark-complete-btn" style="display:none;">
+              <i class="fas fa-check"></i> Concluir Aula
+            </button>
+          </div>
+        </div>
+
+        <div class="aula-content" id="aula-content"></div>
+      </section>
+
+      <!-- COMPLETE -->
+      <section id="screen-complete" class="screen card" style="display:none;text-align:center">
+        <div class="complete-message">
+          <h2 style="margin-top:0">Parabéns — Aula Concluída 🎉</h2>
+          <div id="final-msg" class="muted">Você completou mais uma aula essencial para sua jornada!</div>
+          <div id="progress-wrap" style="margin-top:18px;margin-bottom:12px">
+            <div class="progress-circle" id="progress-circle">
+              <div id="progress-num" style="font-weight:800">0%</div>
+            </div>
+            <div class="muted" style="margin-top:10px" id="progress-sub">Seu progresso total</div>
+          </div>
+          <div style="margin-top:12px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+            <button class="btn ghost" onclick="nav('aulas')">Voltar às Aulas</button>
+            <button class="btn" onclick="nav('home')">Ver Todos os Módulos</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- PERFIL (Melhorado) -->
+      <section id="screen-profile" class="screen card" style="display:none; text-align:center;"
+        aria-labelledby="profile-title">
+        <h2 id="profile-title" style="margin-top:0">
+          <i class="fas fa-user-cog"></i> Configurações do Perfil
+        </h2>
+
+        <div class="profile-photo-section" style="margin-top:8px;">
+          <img id="profile-photo" src="https://via.placeholder.com/120/4A90E2/FFFFFF?text=FP" alt="Foto do Perfil"
+            width="120" height="120" loading="lazy">
+          <input type="file" id="photo-input" accept="image/*" style="display:none;"
+            aria-label="Escolher foto de perfil" onchange="updateProfilePhoto(event)">
+          <div style="display:flex;gap:8px;margin-top:10px; flex-wrap: wrap; justify-content: center;">
+            <button class="btn ghost" onclick="document.getElementById('photo-input').click()">
+              <i class="fas fa-camera"></i> Escolher Foto
+            </button>
+            <button class="btn ghost" onclick="removeProfilePhoto()">
+              <i class="fas fa-trash"></i> Remover
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="profile-name">
+            <i class="fas fa-user"></i> Nome
+          </label>
+          <input type="text" id="profile-name" placeholder="Digite seu nome completo" autocomplete="name"
+            aria-label="Nome completo" required>
+        </div>
+
+        <div class="form-group">
+          <label for="profile-email">
+            <i class="fas fa-envelope"></i> Email
+          </label>
+          <input type="email" id="profile-email" placeholder="Digite seu email de acesso" autocomplete="email"
+            aria-label="Email" required>
+        </div>
+
+        <h3 style="margin-top:20px;">
+          <i class="fas fa-sliders-h"></i> Preferências
+        </h3>
+
+        <div class="form-group toggle-group">
+          <label for="dark-mode-toggle">
+            <i class="fas fa-moon"></i> Modo Escuro
+          </label>
+          <label class="toggle-switch">
+            <input type="checkbox" id="dark-mode-toggle" onchange="toggleDarkMode(this)"
+              aria-label="Alternar modo escuro">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="form-group toggle-group">
+          <label for="notifications-toggle">
+            <i class="fas fa-bell"></i> Notificações
+          </label>
+          <label class="toggle-switch">
+            <input type="checkbox" id="notifications-toggle" onchange="handleNotificationToggle(this)"
+              aria-label="Alternar notificações">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="form-group toggle-group">
+          <label for="reminders-toggle">
+            <i class="fas fa-clock"></i> Lembretes Diários
+          </label>
+          <label class="toggle-switch">
+            <input type="checkbox" id="reminders-toggle" onchange="handleReminderToggle(this)"
+              aria-label="Alternar lembretes">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <!-- Estatísticas do Perfil -->
+        <div class="profile-stats card" style="margin-top: 20px;">
+          <h3 style="margin-top: 0;">
+            <i class="fas fa-chart-line"></i> Suas Estatísticas
+          </h3>
+          <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+            <div class="stat-item">
+              <div id="stats-completed-profile" style="font-size: 1.5em; font-weight: bold; color: var(--success)">0
+              </div>
+              <div style="font-size: 0.8em; color: var(--muted)">Aulas Concluídas</div>
+            </div>
+            <div class="stat-item">
+              <div id="stats-percentage-profile" style="font-size: 1.5em; font-weight: bold; color: var(--primary)">0%
+              </div>
+              <div style="font-size: 0.8em; color: var(--muted)">Progresso</div>
+            </div>
+            <div class="stat-item">
+              <div id="stats-favorites-profile" style="font-size: 1.5em; font-weight: bold; color: var(--danger)">0
+              </div>
+              <div style="font-size: 0.8em; color: var(--muted)">Favoritos</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Importar/Exportar Dados -->
+        <div class="card" style="margin-top: 20px;">
+          <h3 style="margin-top: 0;">
+            <i class="fas fa-database"></i> Gerenciar Dados
+          </h3>
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <button class="btn" onclick="exportUserData()">
+              <i class="fas fa-download"></i> Exportar Meus Dados
+            </button>
+            <button class="btn ghost" onclick="generateProgressReport()">
+              <i class="fas fa-chart-bar"></i> Gerar Relatório
+            </button>
+            <input type="file" id="import-data" accept=".json" style="display:none" onchange="importUserData(event)">
+            <button class="btn ghost" onclick="document.getElementById('import-data').click()">
+              <i class="fas fa-upload"></i> Importar Dados
+            </button>
+            <button class="btn ghost" onclick="clearAllData()" style="color: var(--danger);">
+              <i class="fas fa-trash"></i> Limpar Todos os Dados
+            </button>
+          </div>
+        </div>
+
+        <div style="margin-top:20px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+          <button class="btn" onclick="saveAccountSettings()">
+            <i class="fas fa-save"></i> Salvar Configurações
+          </button>
+          <button class="btn ghost" onclick="nav('home')">
+            <i class="fas fa-home"></i> Voltar ao Início
+          </button>
+        </div>
+      </section>
+
+      <!-- BENEFÍCIOS APRIMORADOS -->
+      <section id="screen-benefits" class="screen card" style="display:none">
+        <div class="benefits-header" style="text-align: center; margin-bottom: 30px;">
+          <h2 style="margin-top:0; color: var(--primary);">
+            <i class="fas fa-star"></i> Benefícios do Curso
+          </h2>
+          <p class="muted" style="max-width: 600px; margin: 0 auto;">Descubra os principais ganhos que você terá ao
+            completar o programa "Conexão Pais e Filhos"</p>
+
+          <!-- Estatísticas Rápidas -->
+          <div class="benefits-stats"
+            style="display: flex; justify-content: center; gap: 30px; margin-top: 20px; flex-wrap: wrap;">
+            <div class="stat-item" style="text-align: center;">
+              <div style="font-size: 2em; font-weight: bold; color: var(--secondary);">89%</div>
+              <div style="font-size: 0.8em; color: var(--muted);">Melhora na comunicação</div>
+            </div>
+            <div class="stat-item" style="text-align: center;">
+              <div style="font-size: 2em; font-weight: bold; color: var(--secondary);">76%</div>
+              <div style="font-size: 0.8em; color: var(--muted);">Redução de conflitos</div>
+            </div>
+            <div class="stat-item" style="text-align: center;">
+              <div style="font-size: 2em; font-weight: bold; color: var(--secondary);">94%</div>
+              <div style="font-size: 0.8em; color: var(--muted);">Satisfação dos pais</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filtros por Categoria -->
+        <div class="benefits-filters" style="margin-bottom: 25px;">
+          <div class="filter-tabs" style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
+            <button class="filter-tab active" onclick="filterBenefits('all')">
+              <i class="fas fa-star"></i> Todos os Benefícios
+            </button>
+            <button class="filter-tab" onclick="filterBenefits('comunicacao')">
+              <i class="fas fa-comments"></i> Comunicação
+            </button>
+            <button class="filter-tab" onclick="filterBenefits('relacionamento')">
+              <i class="fas fa-heart"></i> Relacionamento
+            </button>
+            <button class="filter-tab" onclick="filterBenefits('desenvolvimento')">
+              <i class="fas fa-brain"></i> Desenvolvimento
+            </button>
+          </div>
+        </div>
+
+        <div class="benefits-grid" id="benefits-grid">
+          <!-- COMUNICAÇÃO -->
+          <div class="benefit-card comunicacao" data-category="comunicacao">
+            <div class="benefit-icon">
+              <i class="fas fa-comments"></i>
+            </div>
+            <div class="benefit-content">
+              <h3>Comunicação Clara e Efetiva</h3>
+              <p>Aprenda a expressar suas necessidades e a ouvir seus filhos de forma que ambos se sintam compreendidos
+                e respeitados.</p>
+              <ul class="benefit-features">
+                <li>Escuta ativa e empática</li>
+                <li>Expressão assertiva de sentimentos</li>
+                <li>Diálogo sem julgamentos</li>
+              </ul>
+              <div class="benefit-meta">
+                <span class="benefit-duration"><i class="fas fa-clock"></i> Aulas 2-5</span>
+                <span class="benefit-level"><i class="fas fa-lightbulb"></i> Fundamental</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- RELACIONAMENTO -->
+          <div class="benefit-card relacionamento" data-category="relacionamento">
+            <div class="benefit-icon">
+              <i class="fas fa-heart"></i>
+            </div>
+            <div class="benefit-content">
+              <h3>Vínculos Fortalecidos</h3>
+              <p>Construa relacionamentos mais profundos e significativos com seus filhos através da conexão emocional
+                genuína.</p>
+              <ul class="benefit-features">
+                <li>Confiança e segurança emocional</li>
+                <li>Respeito mútuo e empatia</li>
+                <li>Memórias familiares positivas</li>
+              </ul>
+              <div class="benefit-meta">
+                <span class="benefit-duration"><i class="fas fa-clock"></i> Aulas 6-9</span>
+                <span class="benefit-level"><i class="fas fa-lightbulb"></i> Intermediário</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- DESENVOLVIMENTO -->
+          <div class="benefit-card desenvolvimento" data-category="desenvolvimento">
+            <div class="benefit-icon">
+              <i class="fas fa-brain"></i>
+            </div>
+            <div class="benefit-content">
+              <h3>Desenvolvimento Emocional</h3>
+              <p>Ajude seus filhos a desenvolverem inteligência emocional, resiliência e habilidades sociais essenciais
+                para a vida.</p>
+              <ul class="benefit-features">
+                <li>Autoconhecimento e autoestima</li>
+                <li>Gestão de emoções complexas</li>
+                <li>Resolução pacífica de conflitos</li>
+              </ul>
+              <div class="benefit-meta">
+                <span class="benefit-duration"><i class="fas fa-clock"></i> Aulas 10-13</span>
+                <span class="benefit-level"><i class="fas fa-lightbulb"></i> Avançado</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- HARMONIA FAMILIAR -->
+          <div class="benefit-card comunicacao" data-category="comunicacao">
+            <div class="benefit-icon">
+              <i class="fas fa-home"></i>
+            </div>
+            <div class="benefit-content">
+              <h3>Harmonia Familiar</h3>
+              <p>Crie um ambiente familiar pacífico onde todos se sintam ouvidos, valorizados e apoiados.</p>
+              <ul class="benefit-features">
+                <li>Redução de conflitos domésticos</li>
+                <li>Ambiente seguro para expressão</li>
+                <li>Cooperação e trabalho em equipe</li>
+              </ul>
+              <div class="benefit-meta">
+                <span class="benefit-duration"><i class="fas fa-clock"></i> Aulas 14-17</span>
+                <span class="benefit-level"><i class="fas fa-lightbulb"></i> Fundamental</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- AUTOCONFIANÇA -->
+          <div class="benefit-card relacionamento" data-category="relacionamento">
+            <div class="benefit-icon">
+              <i class="fas fa-rocket"></i>
+            </div>
+            <div class="benefit-content">
+              <h3>Autoconfiança Parental</h3>
+              <p>Ganhe segurança em suas decisões parentais e confiança em sua capacidade de educar e guiar seus filhos.
+              </p>
+              <ul class="benefit-features">
+                <li>Tomada de decisão assertiva</li>
+                <li>Estabelecimento de limites saudáveis</li>
+                <li>Autonomia e liderança familiar</li>
+              </ul>
+              <div class="benefit-meta">
+                <span class="benefit-duration"><i class="fas fa-clock"></i> Aulas 18-21</span>
+                <span class="benefit-level"><i class="fas fa-lightbulb"></i> Intermediário</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- LEGADO FAMILIAR -->
+          <div class="benefit-card desenvolvimento" data-category="desenvolvimento">
+            <div class="benefit-icon">
+              <i class="fas fa-seedling"></i>
+            </div>
+            <div class="benefit-content">
+              <h3>Legado Familiar Positivo</h3>
+              <p>Construa um legado de valores, princípios e memórias que serão levados por gerações.</p>
+              <ul class="benefit-features">
+                <li>Transmissão de valores familiares</li>
+                <li>Tradições e rituais significativos</li>
+                <li>Base sólida para o futuro</li>
+              </ul>
+              <div class="benefit-meta">
+                <span class="benefit-duration"><i class="fas fa-clock"></i> Aulas 22-25</span>
+                <span class="benefit-level"><i class="fas fa-lightbulb"></i> Avançado</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Depoimentos -->
+        <div class="testimonials-section"
+          style="margin-top: 40px; padding: 30px; background: var(--bg); border-radius: var(--radius);">
+          <h3 style="text-align: center; margin-bottom: 25px;">
+            <i class="fas fa-quote-left"></i> O que os pais estão dizendo:
+          </h3>
+          <div class="testimonials-grid"
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+            <div class="testimonial-card">
+              <div class="testimonial-text">
+                "O curso transformou nossa comunicação familiar. Finalmente entendemos o que nossos filhos realmente
+                precisam!"
+              </div>
+              <div class="testimonial-author">
+                <i class="fas fa-user"></i> Ana Silva, mãe de 2 filhos
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <div class="testimonial-text">
+                "As técnicas de resolução de conflitos reduziram nossas brigas em 80%. Valeu cada minuto do curso!"
+              </div>
+              <div class="testimonial-author">
+                <i class="fas fa-user"></i> Carlos Oliveira, pai adolescente
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <div class="testimonial-text">
+                "Aprendi a validar as emoções dos meus filhos e isso mudou completamente nosso relacionamento.
+                Gratidão!"
+              </div>
+              <div class="testimonial-author">
+                <i class="fas fa-user"></i> Mariana Costa, mãe de 3
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="benefits-cta">
+          <h3>Pronto para transformar sua família?</h3>
+          <p>Junte-se a milhares de pais que já transformaram suas relações familiares</p>
+          <button class="btn-cta" onclick="nav('home')">
+            Começar Agora <i class="fas fa-rocket"></i>
+          </button>
+        </div>
+      </section>
+
+      <section id="screen-sentiments" class="screen card" style="display:none">
+
+  <div id="emotion-list-view"> 
+    
+    <h2 style="margin-top:0">
+      <i class="fas fa-brain"></i> Lista de Emoções
+    </h2>
+    <p class="muted">Ferramenta essencial para ajudar você e seu filho a nomear e validar o que estão sentindo.</p>
+
+    <div class="filters-container" id="emotion-filters" style="margin-bottom: 20px;">
+      <button class="filter-btn active" onclick="filterEmotions('all')">
+        <i class="fas fa-layer-group"></i> Todas
+      </button>
+      <button class="filter-btn" onclick="filterEmotions('positive')">
+        <i class="fas fa-smile"></i> Positivas
+      </button>
+      <button class="filter-btn" onclick="filterEmotions('neutral')">
+        <i class="fas fa-meh"></i> Neutras
+      </button>
+      <button class="filter-btn" onclick="filterEmotions('negative')">
+        <i class="fas fa-frown"></i> Desafiadoras
+      </button>
+    </div>
+
+    <div class="sentiments-grid" id="sentiments-grid">
+      <div class="sentiment-card success" data-category="positive" data-emotion-name="Alegria">
+        <div class="emotion-icon">😊</div>
+        <div class="emotion-text">
+          <strong>Alegria</strong>
+          <span class="emotion-desc">Contentamento, felicidade</span>
+        </div>
+      </div>
+
+      <div class="sentiment-card success" data-category="positive" data-emotion-name="Paz">
+        <div class="emotion-icon">😌</div>
+        <div class="emotion-text">
+          <strong>Paz</strong>
+          <span class="emotion-desc">Tranquilidade, serenidade</span>
+        </div>
+      </div>
+
+      <div class="sentiment-card success" data-category="positive" data-emotion-name="Entusiasmo">
+        <div class="emotion-icon">😄</div>
+        <div class="emotion-text">
+          <strong>Entusiasmo</strong>
+          <span class="emotion-desc">Animação, excitação</span>
+        </div>
+      </div>
+
+      <div class="sentiment-card success" data-category="positive" data-emotion-name="Carinho">
+        <div class="emotion-icon">🤗</div>
+        <div class="emotion-text">
+          <strong>Carinho</strong>
+          <span class="emotion-desc">Afeto, aconchego</span>
+        </div>
+      </div>
+
+      <div class="sentiment-card success" data-category="positive" data-emotion-name="Gratidão">
+        <div class="emotion-icon">😇</div>
+        <div class="emotion-text">
+          <strong>Gratidão</strong>
+          <span class="emotion-desc">Agradecimento, reconhecimento</span>
+        </div>
+      </div>
+
+      <div class="sentiment-card success" data-category="positive" data-emotion-name="Amor">
+        <div class="emotion-icon">🥰</div>
+        <div class="emotion-text">
+          <strong>Amor</strong>
+          <span class="emotion-desc">Afeição, conexão profunda</span>
+        </div>
+      </div>
+
+      <div class="sentiment-card success" data-category="positive" data-emotion-name="Confiança">
+        <div class="emotion-icon">😎</div>
+        <div class="emotion-text">
+          <strong>Confiança</strong>
+          <span class="emotion-desc">Segurança, autoestima</span>
+        </div>
+      </div>
+
+      <div class="sentiment-card success" data-category="positive" data-emotion-name="Celebração">
+        <div class="emotion-icon">🎉</div>
+        <div class="emotion-text">
+          <strong>Celebração</strong>
+          <span class="emotion-desc">Festa, conquista</span>
+        </div>
+      </div>
+
+      <div class="sentiment-card neutral" data-category="neutral" data-emotion-name="Neutro">
+        <div class="emotion-icon">😐</div>
+        <div class="emotion-text">
+          <strong>Neutro</strong>
+          <span class="emotion-desc">Equilíbrio, indiferença</span>
+        </div>
+      </div>
+
+      <div class="sentiment-card neutral" data-category="neutral" data-emotion-name="Pensativo">
+        <div class="emotion-icon">🤔</div>
+        <div class="emotion-text">
+          <strong>Pensativo</strong>
+          <span class="emotion-desc">Reflexão, contemplação</span>
+        </div>
+      </div>
+
+      <div class="sentiment-card neutral" data-category="neutral" data-emotion-name="Surpreso">
+        <div class="emotion-icon">😶</div>
+        <div class="emotion-text">
+          <strong>Surpreso</strong>
+          <span class="emotion-desc">Espanto, incredulidade</span>
+        </div>
+      </div>
+
+      <div class="sentiment-card neutral" data-category="neutral" data-emotion-name="Curioso">
+        <div class="emotion-icon">🧐</div>
+        <div class="emotion-text">
+          <strong>Curioso</strong>
+          <span class="emotion-desc">Interesse, investigação</span>
+        </div>
+      </div>
+
+      <div class="sentiment-card danger" data-category="negative" data-emotion-name="Preocupação">
+        <div class="emotion-icon">😟</div>
+        <div class="emotion-text">
+          <strong>Preocupação</strong>
+          <span class="emotion-desc">Inquietação, ansiedade</span>
+        </div>
+      </div>
+
+      <div class="sentiment-card danger" data-category="negative" data-emotion-name="Confusão">
+        <div class="emotion-icon">😕</div>
+        <div class="emotion-text">
+          <strong>Confusão</strong>
+          <span class="emotion-desc">Dúvida, incerteza</span>
+        </div>
+      </div>
+
+      <div class="sentiment-card danger" data-category="negative" data-emotion-name="Tristeza">
+        <div class="emotion-icon">😞</div>
+        <div class="emotion-text">
+          <strong>Tristeza</strong>
+          <span class="emotion-desc">Desânimo, melancolia</span>
+        </div>
+      </div>
+
+      <div class="sentiment-card danger" data-category="negative" data-emotion-name="Desapontamento">
+        <div class="emotion-icon">😔</div>
+        <div class="emotion-text">
+          <strong>Desapontamento</strong>
+          <span class="emotion-desc">Frustração, letdown</span>
+        </div>
+      </div>
+
+      <div class="sentiment-card danger" data-category="negative" data-emotion-name="Frustração">
+        <div class="emotion-icon">😣</div>
+        <div class="emotion-text">
+          <strong>Frustração</strong>
+          <span class="emotion-desc">Irritação, impaciência</span>
+        </div>
+      </div>
+
+      <div class="sentiment-card danger" data-category="negative" data-emotion-name="Raiva">
+        <div class="emotion-icon">😠</div>
+        <div class="emotion-text">
+          <strong>Raiva</strong>
+          <span class="emotion-desc">Ira, indignação</span>
+        </div>
+      </div>
+
+      <div class="sentiment-card danger" data-category="negative" data-emotion-name="Chateado">
+        <div class="emotion-icon">😢</div>
+        <div class="emotion-text">
+          <strong>Chateado</strong>
+          <span class="emotion-desc">Mágoa, pesar</span>
+        </div>
+      </div>
+
+      <div class="sentiment-card danger" data-category="negative" data-emotion-name="Medo">
+        <div class="emotion-icon">😨</div>
+        <div class="emotion-text">
+          <strong>Medo</strong>
+          <span class="emotion-desc">Temor, apreensão</span>
+        </div>
+      </div>
+
+      <div class="sentiment-card danger" data-category="negative" data-emotion-name="Ansiedade">
+        <div class="emotion-icon">😰</div>
+        <div class="emotion-text">
+          <strong>Ansiedade</strong>
+          <span class="emotion-desc">Nervosismo, tensão</span>
+        </div>
+      </div>
+
+      <div class="sentiment-card danger" data-category="negative" data-emotion-name="Exaustão">
+        <div class="emotion-icon">😩</div>
+        <div class="emotion-text">
+          <strong>Exaustão</strong>
+          <span class="emotion-desc">Cansaço, esgotamento</span>
+        </div>
+      </div>
+
+      <div class="sentiment-card danger" data-category="negative" data-emotion-name="Impaciência">
+        <div class="emotion-icon">😤</div>
+        <div class="emotion-text">
+          <strong>Impaciência</strong>
+          <span class="emotion-desc">Irritação, intolerância</span>
+        </div>
+      </div>
+
+      <div class="sentiment-card danger" data-category="negative" data-emotion-name="Angústia">
+        <div class="emotion-icon">😭</div>
+        <div class="emotion-text">
+          <strong>Angústia</strong>
+          <span class="emotion-desc">Sofrimento, desespero</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="emotion-stats">
+      <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+        <div class="stat-item">
+          <div style="font-size: 1.5em; font-weight: bold; color: var(--success)">8</div>
+          <div style="font-size: 0.8em; color: var(--muted)">Positivas</div>
+        </div>
+        <div class="stat-item">
+          <div style="font-size: 1.5em; font-weight: bold; color: var(--warning)">4</div>
+          <div style="font-size: 0.8em; color: var(--muted)">Neutras</div>
+        </div>
+        <div class="stat-item">
+          <div style="font-size: 1.5em; font-weight: bold; color: var(--danger)">12</div>
+          <div style="font-size: 0.8em; color: var(--muted)">Desafiadoras</div>
+        </div>
+      </div>
+    </div>
+
+  </div> <div id="emotion-process-steps" style="display: none;">
+      
+      <div id="step-intensity" class="process-step">
+          <h2 id="intensity-title">Qual a intensidade da sua [NOME DA EMOÇÃO]?</h2>
+          <p>Use a escala de 1 (Leve) a 10 (Máxima).</p>
+          <input type="range" min="1" max="10" value="5" class="slider" id="intensity-slider">
+          <p id="intensity-value">Intensidade: 5</p>
+          <button class="btn btn-primary next-step-btn" data-next-step="step-context">Próximo</button>
+      </div>
+
+      <div id="step-context" class="process-step" style="display: none;">
+          <h2>O que aconteceu ou de que você precisa?</h2>
+          <p>O que te fez sentir assim? Tente descrever em poucas palavras ou escolha uma opção.</p>
+          <textarea id="context-input" placeholder="Ex: Briguei com o meu irmão/a..."></textarea>
+          
+          <div id="need-options" style="margin-top: 15px;">
+              <p>Se for uma emoção difícil, talvez você precise de:</p>
+              <button class="btn btn-muted need-btn">Atenção</button>
+              <button class="btn btn-muted need-btn">Descanso</button>
+              <button class="btn btn-muted need-btn">Ser ouvido</button>
+          </div>
+          
+          <button class="btn btn-primary next-step-btn" data-next-step="step-action">Próximo</button>
+      </div>
+
+      <div id="step-action" class="process-step" style="display: none;">
+        <h2 id="action-title">Ótimo. Agora, vamos agir.</h2>
+        <div id="suggested-tool-box">
+            <p>Sua ferramenta sugerida aparecerá aqui.</p>
+        </div>
+        
+        <button class="btn btn-success" onclick="app.saveEmotionResultAsNote()"><i class="fas fa-edit"></i> Salvar em Anotações</button>
+        <button class="btn btn-secondary" onclick="resetProcess()">Começar de novo</button>
+    </div>
+  </div>
+
+</section>
+
+      <!-- SOBRE -->
+      <section id="screen-about" class="screen card" style="display:none" aria-labelledby="about-title">
+        <h2 id="about-title" style="margin-top:0">
+          <i class="fas fa-info-circle"></i> Sobre a Universidade de Pais
+        </h2>
+
+        <!-- IMAGEM RESPONSIVA -->
+        <div class="university-hero">
+          <img
+            src="https://yt3.googleusercontent.com/7pAVqsIdL_Z9v9QPy87wWxb1NQWxqo1sQ8kQD3N3hbrWWA7x-aPpBm1RiSpsd3fm2Z0qpjG-8t4=w1060-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj"
+            alt="Missão da Universidade de Pais" class="university-image">
+          <p class="image-caption">Criando conexões que transformam famílias</p>
+        </div>
+
+        <p class="muted">
+          A <strong>Universidade de Pais</strong> é uma plataforma de informação, com cursos, palestras e workshops
+          sobre temas relevantes na criação, educação e formação de filhos em cada fase da vida.
+        </p>
+
+        <p>
+          Eu, <strong>Ana Meirelles</strong> & <strong>Dr. Wimer Bottura</strong>, junto com os melhores especialistas,
+          reunimos conhecimento para formar pais preparados para a maravilhosa jornada de criar boas pessoas para o
+          mundo — e filhos felizes.
+        </p>
+
+        <div class="card">
+          <h3><i class="fas fa-bullseye"></i> Propósito</h3>
+          <p>
+            Promover o desenvolvimento de seres humanos realizados, através da formação de pais para o fortalecimento da
+            relação entre pais e filhos.
+          </p>
+          <p>
+            Pense: que filhos você quer em 15 anos? Nosso propósito é formar e informar para que possamos criar nossos
+            filhos com sabedoria, respeito e empatia — e que essa seja nossa grande experiência de vida: <em>"Criar boas
+              pessoas para o mundo, respeitosas e realizadas."</em>
+          </p>
+        </div>
+
+        <div class="card">
+          <h3><i class="fas fa-heart"></i> Missão</h3>
+          <p>
+            Formar pais conscientes, empáticos e preparados para conduzir seus filhos com amor, equilíbrio e propósito,
+            construindo famílias mais felizes e conectadas.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3><i class="fas fa-users"></i> Participe</h3>
+          <p>
+            Faça parte dessa jornada! Cadastre-se no site — estamos reunindo pessoas interessadas em <strong>aprender,
+              ensinar e apoiar</strong>. Juntos, podemos transformar a experiência de ser pai e mãe.
+          </p>
+        </div>
+
+        <button class="btn ghost" onclick="nav('home')">
+          <i class="fas fa-arrow-left"></i> Voltar ao Início
+        </button>
+      </section>
+
+      <!-- FAQs -->
+      <section id="screen-faq" class="screen card" style="display:none" aria-labelledby="faq-title">
+        <h2 id="faq-title" style="margin-top:0">
+          <i class="fas fa-question-circle"></i> FAQs e Fale Conosco
+        </h2>
+        <p class="muted">Perguntas frequentes e formulário para contato.</p>
+
+        <div class="faq-list">
+          <div class="faq-item card">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              <h3>Quanto tempo dura o curso?</h3>
+              <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="faq-answer">
+              <p>O curso tem 32 aulas, cada uma de até 8 minutos. Pode ser concluído no seu ritmo.</p>
+            </div>
+          </div>
+          <div class="faq-item card">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              <h3>Preciso de materiais extras?</h3>
+              <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="faq-answer">
+              <p>Não, tudo é fornecido no app. Recomendamos um bloco de notas para anotações pessoais.</p>
+            </div>
+          </div>
+          <div class="faq-item card">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              <h3>Posso acessar offline?</h3>
+              <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="faq-answer">
+              <p>Sim, após carregar as aulas, mas quizzes requerem conexão inicial.</p>
+            </div>
+          </div>
+          <div class="faq-item card">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              <h3>O curso é gratuito?</h3>
+              <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="faq-answer">
+              <p>Sim, este curso demonstrativo é completamente gratuito. Versões futuras podem ter conteúdos premium.
+              </p>
+            </div>
+          </div>
+          <div class="faq-item card">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              <h3>Posso compartilhar com outros pais?</h3>
+              <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="faq-answer">
+              <p>Sim! Incentivamos o compartilhamento. Use a função "Compartilhar" no menu.</p>
+            </div>
+          </div>
+        </div>
+
+        <h3><i class="fas fa-envelope"></i> Fale Conosco</h3>
+        <form id="contact-form" class="contact-form">
+          <div class="form-group">
+            <label for="contact-name">Seu Nome</label>
+            <input type="text" id="contact-name" placeholder="Digite seu nome" aria-label="Seu nome" required>
+          </div>
+          <div class="form-group">
+            <label for="contact-email">Seu Email</label>
+            <input type="email" id="contact-email" placeholder="Digite seu email" aria-label="Seu email" required>
+          </div>
+          <div class="form-group">
+            <label for="contact-subject">Assunto</label>
+            <select id="contact-subject" aria-label="Assunto do contato">
+              <option value="">Selecione um assunto</option>
+              <option value="duvida">Dúvida sobre o curso</option>
+              <option value="tecnico">Problema técnico</option>
+              <option value="sugestao">Sugestão</option>
+              <option value="outro">Outro</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="contact-message">Sua Mensagem</label>
+            <textarea id="contact-message" rows="4" placeholder="Digite sua dúvida ou sugestão"
+              aria-label="Mensagem de contato" required></textarea>
+          </div>
+          <button class="btn" type="button" onclick="sendContactMessage()">
+            <i class="fas fa-paper-plane"></i> Enviar Mensagem
+          </button>
+        </form>
+      </section>
+
+      <!-- ANOTAÇÕES -->
+      <section id="screen-notes" class="screen card" style="display:none" aria-labelledby="notes-title">
+        <h2 id="notes-title" style="margin-top:0">
+          <i class="fas fa-sticky-note"></i> Anotações
+        </h2>
+        <p class="muted">Registre suas ideias e reflexões aqui. Salvas automaticamente.</p>
+
+        <!-- Nova Anotação -->
+        <div class="card new-note" style="margin-bottom: 20px;">
+          <h3><i class="fas fa-plus"></i> Nova Anotação</h3>
+          <div class="form-group">
+            <label for="note-title">Título</label>
+            <input type="text" id="note-title" placeholder="Título da anotação" aria-label="Título da anotação">
+          </div>
+          <div class="form-group">
+            <label for="note-content">Conteúdo</label>
+            <textarea id="note-content" rows="4" placeholder="Digite suas anotações..."
+              aria-label="Conteúdo da anotação"></textarea>
+          </div>
+          <div class="form-group toggle-group">
+            <label for="note-favorite">
+              <i class="fas fa-star"></i> Marcar como favorita
+            </label>
+            <label class="toggle-switch">
+              <input type="checkbox" id="note-favorite" aria-label="Marcar como favorita">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <button class="btn" onclick="saveNote()">
+            <i class="fas fa-save"></i> Salvar Anotação
+          </button>
+        </div>
+
+        <!-- Filtros -->
+        <div class="notes-filters">
+          <button class="filter-btn active" onclick="filterNotes('all')">
+            <i class="fas fa-layer-group"></i> Todas
+          </button>
+          <button class="filter-btn" onclick="filterNotes('favorite')">
+            <i class="fas fa-star"></i> Favoritas
+          </button>
+          <button class="filter-btn" onclick="filterNotes('recent')">
+            <i class="fas fa-clock"></i> Recentes
+          </button>
+        </div>
+
+        <!-- Lista de Anotações -->
+        <div class="notes-list" id="notes-list"></div>
+
+        <div style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
+          <button class="btn ghost" onclick="clearNotes()">
+            <i class="fas fa-trash"></i> Limpar Anotações
+          </button>
+          <button class="btn ghost" onclick="shareNotes()">
+            <i class="fas fa-share"></i> Compartilhar
+          </button>
+          <button class="btn" onclick="downloadNotes()">
+            <i class="fas fa-download"></i> Exportar
+          </button>
+        </div>
+      </section>
+
+      <!-- FAVORITOS -->
+      <section id="screen-favorites" class="screen card" style="display:none" aria-labelledby="favorites-title">
+        <h2 id="favorites-title" style="margin-top:0">
+          <i class="fas fa-heart"></i> Favoritos
+        </h2>
+        <p class="muted">Aulas marcadas como favoritas.</p>
+        <div id="favorites-list"></div>
+        <button class="btn ghost" onclick="nav('home')">
+          <i class="fas fa-arrow-left"></i> Voltar ao Início
+        </button>
+      </section>
+
+      <!-- COMPARTILHAR -->
+      <section id="screen-share" class="screen card" style="display:none" aria-labelledby="share-title">
+        <h2 id="share-title" style="margin-top:0">
+          <i class="fas fa-share-alt"></i> Compartilhar
+        </h2>
+        <p class="muted">Compartilhe o curso ou a aula atual com amigos e família.</p>
+
+        <div class="share-options">
+          <button class="share-btn" onclick="shareOnWhatsApp()">
+            <i class="fab fa-whatsapp"></i> WhatsApp
+          </button>
+          <button class="share-btn" onclick="shareOnFacebook()">
+            <i class="fab fa-facebook"></i> Facebook
+          </button>
+          <button class="share-btn" onclick="shareOnTwitter()">
+            <i class="fab fa-twitter"></i> Twitter
+          </button>
+          <button class="share-btn" onclick="copyShareLink()">
+            <i class="fas fa-link"></i> Copiar Link
+          </button>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 20px;">
+          <button class="btn" onclick="shareApp()">
+            <i class="fas fa-share"></i> Compartilhar o App
+          </button>
+          <button class="btn ghost" onclick="shareCurrentAula()">
+            <i class="fas fa-link"></i> Compartilhar Aula Atual
+          </button>
+          <button class="btn ghost" onclick="shareProgress()">
+            <i class="fas fa-chart-line"></i> Compartilhar Progresso
+          </button>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- TOAST -->
+    <div id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+    <!-- FOOTER FIXO -->
+    <footer role="navigation" aria-label="Menu inferior">
+      <div class="nav-item active" id="nav-home" onclick="nav('home')" role="button" tabindex="0">
+        <div class="nav-icon" aria-hidden="true"><i class="fas fa-home"></i></div><span>Início</span>
+      </div>
+      <div class="nav-item" id="nav-benefits" onclick="nav('benefits')" role="button" tabindex="0">
+        <div class="nav-icon" aria-hidden="true"><i class="fas fa-star"></i></div><span>Benefícios</span>
+      </div>
+      <div class="nav-item" id="nav-sentiments" onclick="nav('sentiments')" role="button" tabindex="0">
+        <div class="nav-icon" aria-hidden="true"><i class="fas fa-brain"></i></div><span>Emoções</span>
+      </div>
+      <div class="nav-item" id="nav-profile" onclick="nav('profile')" role="button" tabindex="0">
+        <div class="nav-icon" aria-hidden="true"><i class="fas fa-user"></i></div><span>Perfil</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Service Worker Registration -->
+  <script>
+    // Registro do Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('/sw.js')
+          .then(function (registration) {
+            console.log('✅ ServiceWorker registrado com sucesso: ', registration.scope);
+          })
+          .catch(function (error) {
+            console.log('❌ Falha no registro do ServiceWorker: ', error);
+          });
+      });
+    }
+
+    // Instalação da PWA
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+
+      // Mostra botão de instalação
+      const installButton = document.createElement('button');
+      installButton.textContent = '📱 Instalar App';
+      installButton.className = 'btn';
+      installButton.style.cssText = `
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        z-index: 1000;
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 20px;
+        font-size: 0.8em;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      `;
+
+      installButton.addEventListener('click', async () => {
+        if (!deferredPrompt) return;
+
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+
+        if (outcome === 'accepted') {
+          console.log('📱 Usuário aceitou instalar a PWA');
+          installButton.remove();
+        }
+
+        deferredPrompt = null;
+      });
+
+      document.body.appendChild(installButton);
+    });
+  </script>
+
+  <!-- WhatsApp FAB - DEVE ESTAR NO FINAL DO BODY -->
+<a href="https://wa.me/5511999999999?text=Olá! Gostaria de mais informações sobre o curso Universidade de Pais" 
+   class="whatsapp-fab" 
+   target="_blank" 
+   rel="noopener noreferrer"
+   aria-label="Fale conosco no WhatsApp"
+   title="Fale conosco no WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+  <!-- Script -->
+  <script src="auth.js" type="module"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>

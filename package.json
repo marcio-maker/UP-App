@@ -1,0 +1,28 @@
+{
+  "name": "universidade-de-pais-app",
+  "version": "2.1.0",
+  "description": "Aplicativo PWA educativo para fortalecimento de laços familiares",
+  "main": "index.html",
+  "scripts": {
+    "start": "http-server -p 3000 -c-1",
+    "build": "echo 'Build completo - PWA pronta para deploy'",
+    "serve": "npm start",
+    "dev": "npm start"
+  },
+  "keywords": [
+    "pwa",
+    "education",
+    "parenting",
+    "family",
+    "course",
+    "offline"
+  ],
+  "author": "Universidade de Pais",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

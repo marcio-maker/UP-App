@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <meta name="theme-color" content="#3a6ea5" />
+    <title>Universidade de Pais — Bem-vindo</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css"> 
+
+    <script src="auth.js" type="module"></script>
+
+    <script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.module.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden; 
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg, #1e272e); 
+            color: #f0f0f0; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            height: 100vh;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            z-index: 0; 
+        }
+
+        .intro-overlay {
+            position: relative; 
+            z-index: 1; 
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(30, 39, 46, 0.4); 
+            border-radius: 10px;
+            max-width: 90%;
+            border: 1px solid rgba(58, 110, 165, 0.5); 
+            box-shadow: 0 0 25px rgba(58, 110, 165, 0.5); 
+            /* Para garantir que o texto seja legível sobre a animação */
+            backdrop-filter: blur(2px); 
+        }
+
+        h1 {
+            font-size: 2.8em;
+            color: #fff;
+            text-shadow: 0 0 10px var(--primary, #3a6ea5); 
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #ccc;
+        }
+
+        #go-to-login {
+            margin-top: 20px;
+            background-color: var(--primary, #3a6ea5); 
+            color: white;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px; 
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="intro-overlay">
+        <h1>Universidade de Pais</h1>
+        <p>Conecte-se com seus filhos e fortaleça os laços familiares através de uma jornada de aprendizado única.</p>
+        
+        <button class="btn" id="go-to-login">
+            <i class="fas fa-sign-in-alt"></i> Entrar no Curso
+        </button>
+    </div>
+
+    <script type="module">
+        import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.module.min.js';
+
+        let scene, camera, renderer;
+        let particles, lines;
+        let particlePositions;
+        let mouseX = 0, mouseY = 0;
+        let windowHalfX = window.innerWidth / 2;
+        let windowHalfY = window.innerHeight / 2;
+        
+        // Configurações do Tema e Partículas
+        const THEME_PRIMARY_COLOR = 0x3a6ea5; 
+        const THEME_DARK_BG_COLOR = 0x1e272e;
+        const PARTICLE_COUNT = 500; // Número moderado de partículas para bom desempenho
+        const CONNECTION_DISTANCE = 100; // Distância máxima para conectar duas partículas
+        const PARTICLE_SIZE = 2;
+
+        function init() {
+            scene = new THREE.Scene();
+            scene.fog = new THREE.Fog(THEME_DARK_BG_COLOR, 1, 2500); 
+
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 4000);
+            camera.position.z = 1000;
+
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio); 
+            document.body.appendChild(renderer.domElement);
+
+            // 1. Criar Partículas (Points)
+            const range = 1000;
+            particlePositions = new Float32Array(PARTICLE_COUNT * 3);
+            
+            for (let i = 0; i < PARTICLE_COUNT; i++) {
+                const i3 = i * 3;
+                particlePositions[i3 + 0] = Math.random() * range - range / 2;
+                particlePositions[i3 + 1] = Math.random() * range - range / 2;
+                particlePositions[i3 + 2] = Math.random() * range - range / 2;
+            }
+
+            const particleGeometry = new THREE.BufferGeometry();
+            particleGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+            
+            const particleMaterial = new THREE.PointsMaterial({
+                color: THEME_PRIMARY_COLOR, 
+                size: PARTICLE_SIZE, 
+                transparent: true,
+                opacity: 0.9,
+                blending: THREE.AdditiveBlending 
+            });
+
+            particles = new THREE.Points(particleGeometry, particleMaterial);
+            scene.add(particles);
+
+            // 2. Criar Linhas (LineSegments) - Serão atualizadas a cada frame
+            const maxConnections = PARTICLE_COUNT * 2; // Estimativa do máximo de linhas
+            const lineGeometry = new THREE.BufferGeometry();
+            const linePositions = new Float32Array(maxConnections * 6); // 2 pontos * 3 coords * maxConnections
+            lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
+            
+            const lineMaterial = new THREE.LineBasicMaterial({
+                color: THEME_PRIMARY_COLOR, 
+                opacity: 0.5, // Linhas mais sutis
+                transparent: true,
+                blending: THREE.AdditiveBlending
+            });
+
+            lines = new THREE.LineSegments(lineGeometry, lineMaterial);
+            scene.add(lines);
+
+            document.addEventListener('mousemove', onDocumentMouseMove, false);
+            window.addEventListener('resize', onWindowResize, false);
+        }
+
+        function onDocumentMouseMove(event) {
+            mouseX = (event.clientX - windowHalfX) * 0.05; 
+            mouseY = (event.clientY - windowHalfY) * 0.05;
+        }
+
+        function onWindowResize() {
+            windowHalfX = window.innerWidth / 2;
+            windowHalfY = window.innerHeight / 2;
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function updateConnections() {
+            let vertexpos = 0;
+            let currentLineCount = 0;
+            const positions = lines.geometry.attributes.position.array;
+
+            // Limpa as linhas anteriores
+            for (let i = 0; i < positions.length; i++) positions[i] = 0;
+
+            for (let i = 0; i < PARTICLE_COUNT; i++) {
+                // Posição da partícula i
+                const xi = particlePositions[i * 3 + 0];
+                const yi = particlePositions[i * 3 + 1];
+                const zi = particlePositions[i * 3 + 2];
+
+                for (let j = i + 1; j < PARTICLE_COUNT; j++) {
+                    // Posição da partícula j
+                    const xj = particlePositions[j * 3 + 0];
+                    const yj = particlePositions[j * 3 + 1];
+                    const zj = particlePositions[j * 3 + 2];
+
+                    // Calcula a distância usando a fórmula simplificada (distância ao quadrado)
+                    const dx = xi - xj;
+                    const dy = yi - yj;
+                    const dz = zi - zj;
+                    const distSq = dx * dx + dy * dy + dz * dz;
+
+                    // Verifica se a distância é menor que o limite (ao quadrado)
+                    if (distSq < CONNECTION_DISTANCE * CONNECTION_DISTANCE) {
+                        
+                        // Adiciona a linha (i -> j)
+                        positions[vertexpos++] = xi;
+                        positions[vertexpos++] = yi;
+                        positions[vertexpos++] = zi;
+
+                        positions[vertexpos++] = xj;
+                        positions[vertexpos++] = yj;
+                        positions[vertexpos++] = zj;
+                        
+                        currentLineCount++;
+                    }
+                }
+            }
+            
+            // Atualiza a geometria
+            lines.geometry.setDrawRange(0, currentLineCount * 2);
+            lines.geometry.attributes.position.needsUpdate = true;
+            lines.geometry.attributes.position.count = currentLineCount * 2;
+        }
+
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // 1. Atualizar Partículas (Movimento)
+            // Simulação de movimento sutil das partículas para frente
+            for (let i = 0; i < PARTICLE_COUNT; i++) {
+                 // Movimento suave na direção Z (aproximando-se)
+                 particlePositions[i * 3 + 2] += 1; 
+
+                 // Se a partícula sair do campo de visão, a reposiciona
+                 if (particlePositions[i * 3 + 2] > camera.position.z + 1000) {
+                     particlePositions[i * 3 + 2] = camera.position.z - 1000;
+                 }
+            }
+            particles.geometry.attributes.position.needsUpdate = true;
+
+            // 2. Atualizar Câmera (Mouse)
+            camera.position.x += (mouseX - camera.position.x) * 0.005;
+            camera.position.y += (-mouseY - camera.position.y) * 0.005;
+            camera.lookAt(scene.position);
+
+            // 3. Conectar Partículas
+            updateConnections();
+
+            renderer.render(scene, camera);
+        }
+
+        // Script de autenticação (mantido com a lógica de clique manual)
+        function redirectToAppOrLogin() {
+            try {
+                console.log('Botão "Entrar" clicado. Verificando sessão...');
+                if (window.auth && typeof window.auth.isLoggedIn === 'function' && window.auth.isLoggedIn()) {
+                    console.log('Usuário logado, redirecionando para app...');
+                    window.location.replace('index.html');
+                } else {
+                    console.log('Usuário não logado, redirecionando para login...');
+                    window.location.replace('login.html');
+                }
+            } catch (error) {
+                console.error('Erro de Autenticação na transição:', error);
+                window.location.replace('login.html');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            init(); 
+            animate(); 
+
+            const button = document.getElementById('go-to-login');
+            if (button) {
+                button.addEventListener('click', redirectToAppOrLogin);
+            }
+        });
+    </script>
+</body>
+
+</html>
