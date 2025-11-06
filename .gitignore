@@ -1,0 +1,15 @@
+# Dependências
+node_modules/
+
+# Configurações do editor
+.vscode/
+
+# Logs
+*.log
+
+# Builds ou distribuições
+dist/
+build/
+
+# Cache
+*.cache
